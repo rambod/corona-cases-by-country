@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/countires.dart';
@@ -16,6 +17,13 @@ class HeadBody extends StatefulWidget {
 class _HeadBodyState extends State<HeadBody> {
   String _searchword = '';
 
+  @override
+  void initState() {
+    print('Start Up');
+    // TODO: implement initState
+    super.initState();
+  }
+
   void _search(dt) {
     setState(() {
       _searchword = dt;
@@ -25,7 +33,23 @@ class _HeadBodyState extends State<HeadBody> {
 
   @override
   Widget build(BuildContext context) {
+    print('Hello world');
+    final x = print('Hello world2');
     final countriesData = Provider.of<Countries>(context);
+    final countryfetch = countriesData.httpGet;
+    final countries = countriesData.items;
+    final sumz = countriesData.totalz;
+    () => {x};
+//    countryfetch();
+    void test() {
+      countryfetch;
+      setState(() {});
+    }
+
+    test;
+
+    print(countries);
+
     var _countries = countriesData.items
         .where((element) => element['location']
             .toLowerCase()
@@ -44,17 +68,14 @@ class _HeadBodyState extends State<HeadBody> {
         height: (MediaQuery.of(context).size.height -
                 widget.appBar.preferredSize.height -
                 MediaQuery.of(context).padding.top) *
-            .62,
+            .604,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                end: Alignment.bottomRight,
-                begin: Alignment.centerLeft,
-                colors: [Colors.white, Colors.white]),
+            color: Colors.white,
             borderRadius: BorderRadius.only(
 //              bottomRight: Radius.elliptical(200, 200),
               bottomLeft: Radius.elliptical(
-                  MediaQuery.of(context).size.width * .5,
-                  MediaQuery.of(context).size.height * .5),
+                  MediaQuery.of(context).size.width * .4,
+                  MediaQuery.of(context).size.height * .4),
 //              topRight:  Radius.elliptical(300, 400),
 //              topLeft:  Radius.elliptical(500, 200),
             )),
@@ -73,17 +94,22 @@ class _HeadBodyState extends State<HeadBody> {
               width: MediaQuery.of(context).size.width * .8,
               child: Container(
                 child: Column(children: [
-                  TextField(
-                    autofocus: false,
-                    decoration: InputDecoration(
+                  Container(
+                    width: MediaQuery.of(context).size.width * .5,
+                    padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height * .01),
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    child: TextField(
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
 //                      border: Border(InputBorder(borderSide: BorderSide(color: Colors.red))),
 
-                      icon: Icon(
-                        Icons.search,
-                        color: Colors.black,
+                        labelText: 'Search Country Name',
                       ),
+                      onChanged: (val) => _search(val),
                     ),
-                    onChanged: (val) => _search(val),
                   ),
                   Container(
                     margin: EdgeInsets.all(10),
@@ -105,7 +131,7 @@ class _HeadBodyState extends State<HeadBody> {
                                   margin: EdgeInsets.all(1),
                                   padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
-                                      color: Colors.black26,
+                                      color: Colors.transparent,
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Row(
                                     mainAxisAlignment:
@@ -116,10 +142,10 @@ class _HeadBodyState extends State<HeadBody> {
                                             MediaQuery.of(context).size.width *
                                                 .1,
 //                                height: MediaQuery.of(context).size.height * .1,
-                                        child: Image(
-                                          image: NetworkImage(
-                                              'https://www.countryflags.io/${_countries[index]['country_code']}/shiny/64.png'),
-                                        ),
+                                        child: Image.asset(
+                                            'assets/flags/264-${_countries[index]['location'].toString().toLowerCase().replaceAll(' ', '-')}.png'),
+//                                          image: NetworkImage(
+//                                              'https://www.countryflags.io/${_countries[index]['country_code']}/shiny/64.png'),
                                       ),
                                       Container(
                                         width:
@@ -127,33 +153,27 @@ class _HeadBodyState extends State<HeadBody> {
                                                 .3,
                                         child: Text(
                                           _countries[index]['location'],
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(color: Colors.black),
                                         ),
                                         alignment: Alignment.centerLeft,
                                       ),
                                       Container(
-                                        height: (MediaQuery.of(context)
-                                                    .size
-                                                    .height -
-                                                widget.appBar.preferredSize
-                                                    .height -
-                                                MediaQuery.of(context)
-                                                    .padding
-                                                    .top) *
-                                            .18,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 .3,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .12,
                                         child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
                                                     color: Colors.deepOrange,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10)),
+                                                            5)),
                                                 child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -174,7 +194,7 @@ class _HeadBodyState extends State<HeadBody> {
                                                     color: Colors.red,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10)),
+                                                            5)),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -194,7 +214,7 @@ class _HeadBodyState extends State<HeadBody> {
                                                     color: Colors.green,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10)),
+                                                            5)),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -215,9 +235,23 @@ class _HeadBodyState extends State<HeadBody> {
                                     ],
                                   ));
                             })
-                        : Text(
-                            'No Data',
-                            style: TextStyle(color: Colors.blue),
+                        : Column(
+                            children: <Widget>[
+                              Text(
+                                'No Data',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              RaisedButton(
+                                elevation: 20,
+                                onPressed: countryfetch,
+                                color: Theme.of(context).primaryColor,
+                                child: Icon(
+                                  Icons.cloud_download,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
                           ),
                   ),
                 ]),

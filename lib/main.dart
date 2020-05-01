@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
 
-          primarySwatch: Colors.blue,
-          accentColor: Colors.black,
+          primarySwatch: Colors.indigo,
+          accentColor: Colors.indigoAccent,
           iconTheme: ThemeData.light().iconTheme.copyWith(
             color: Colors.white
           ),
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               fontSize: 20,
             ),
             bodyText2: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               color: Colors.white,
               fontWeight: FontWeight.bold,
                 fontFamily: 'Raleway',
